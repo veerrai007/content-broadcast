@@ -21,11 +21,11 @@ const contentSchema = new mongoose.Schema(
       type: String,
       required: true, // stored URL after upload (e.g. Cloudinary)
     },
-    fileType: {
-      type: String,
-      enum: ['jpg', 'jpeg', 'png', 'gif'],
-      required: true,
-    },
+    // fileType: {
+    //   type: String,
+    //   enum: ['jpg', 'jpeg', 'png', 'gif'],
+    //   required: true,
+    // },
     uploadedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User', // teacher
