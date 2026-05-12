@@ -1,6 +1,6 @@
+import { ApiResponse } from '@/types/apiResponse';
 import api from './api';
-import { Content, ContentFilters, CreateContentPayload, DashboardStats } from '@/types';
-
+import { Content, ContentFilters, DashboardStats } from '@/types';
 
 const contentService = {
 
@@ -17,9 +17,13 @@ const contentService = {
     return response.data;
   },
 
-  async create(contentData: CreateContentPayload): Promise<{ content: Content }> {
-    const response = await api.post<{ content: Content }>('/content', contentData);
-    return response.data; 
+  async create(contentData: FormData): Promise<ApiResponse> {
+    const response = await api.post<ApiResponse>('/content', contentData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
   },
 
   async delete(id: string): Promise<{ message: string }> {

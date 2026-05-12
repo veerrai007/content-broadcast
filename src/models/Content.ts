@@ -1,7 +1,22 @@
-// models/Content.js
 import mongoose from 'mongoose';
 
-const contentSchema = new mongoose.Schema(
+export type ContentType = {
+  _id?: string;
+  title: string;
+  description: string;
+  subject: string;
+  fileUrl: string;
+  uploadedBy: mongoose.Schema.Types.ObjectId;
+  status: string;
+  rejectionReason?: string;
+  startTime: Date;
+  endTime: Date;
+  rotationDuration: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+const contentSchema: mongoose.Schema<ContentType> = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -19,16 +34,11 @@ const contentSchema = new mongoose.Schema(
     },
     fileUrl: {
       type: String,
-      required: true, // stored URL after upload (e.g. Cloudinary)
+      required: true,
     },
-    // fileType: {
-    //   type: String,
-    //   enum: ['jpg', 'jpeg', 'png', 'gif'],
-    //   required: true,
-    // },
     uploadedBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // teacher
+      ref: 'User',
       required: true,
     },
     status: {
@@ -38,7 +48,7 @@ const contentSchema = new mongoose.Schema(
     },
     rejectionReason: {
       type: String,
-      default: null, // only filled when status === 'rejected'
+      default: null,
     },
     startTime: {
       type: Date,
@@ -49,7 +59,7 @@ const contentSchema = new mongoose.Schema(
       required: true,
     },
     rotationDuration: {
-      type: Number, // in seconds
+      type: Number,
       default: null,
     },
   },

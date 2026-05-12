@@ -3,16 +3,16 @@ import { signToken } from '@/lib/auth';
 import { dbConnect } from '@/lib/db';
 import User from '@/models/User';
 
-export async function POST(request:NextRequest) {
+export async function POST(request: NextRequest) {
   try {
     await dbConnect();
-    const { name, email, password, role, secretCode="" } = await request.json();
+    const { name, email, password, role, principalCode = "" } = await request.json();
 
     if (!name || !email || !password || !role) {
       return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
     }
 
-    if(role=='principal' && secretCode!==process.env.PRINCIPAL_SECRET_CODE){
+    if (role == 'principal' && principalCode !== process.env.PRINCIPAL_SECRET_CODE) {
       return NextResponse.json({ error: 'Principal Secret Code is invalid' }, { status: 401 });
     }
 

@@ -20,7 +20,6 @@ export interface Content {
   subject: string;
   description?: string;
   fileUrl: string;
-  fileType: string;
   uploadedBy: User;
   status: ContentStatus;
   rejectionReason?: string | null;
@@ -55,14 +54,4 @@ export interface AuthResponse {
 export interface ContentFilters {
   status?: ContentStatus;
   search?: string;
-}
-
-export interface CreateContentPayload {
-  title: string;
-  subject: string;
-  description?: string;
-  fileUrl: string;
-  startTime: string;
-  endTime: string;
-  rotationDuration?: number | null;
 }

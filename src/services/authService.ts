@@ -34,11 +34,15 @@ const authService = {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+
+    document.cookie = 'token=; path=/; max-age=0';
   },
 
   saveSession(token:string, user:User): void {
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
+
+    document.cookie = `token=${token}; path=/; max-age=${7 * 24 * 60 * 60}`;
   },
 
   getStoredUser(): User | null {

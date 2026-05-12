@@ -1,8 +1,17 @@
 
-export default function Home() {
+'use client';
+import { useAuth } from '@/context/AuthContext';
+
+export default function Navbar() {
+  const { user, logout, isLoading } = useAuth();
+
+  if (isLoading) return <p>Loading...</p>;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-        <h1>Welcome!</h1>
-    </div>
+    <nav>
+      <p>Welcome, {user?.name}</p>
+      <p>Role: {user?.role}</p>
+      <button onClick={logout}>Logout</button>
+    </nav>
   );
 }

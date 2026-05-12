@@ -4,11 +4,14 @@ import Content from '@/models/Content';
 import { dbConnect } from '@/lib/db';
 import cloudinary from '@/lib/cloudinary';
 import { AuthUser } from '@/types';
+import '@/models/User';
 
-type QuaryType = {
-  status?:string
-  title?:any
-  uploadedBy?:string
+export const dynamic = 'force-dynamic';
+
+type QueryType = {
+  status?: string
+  title?: any
+  uploadedBy?: string
 }
 
 export async function GET(request: NextRequest) {
@@ -18,11 +21,11 @@ export async function GET(request: NextRequest) {
 
     await dbConnect();
 
-    const { searchParams } = new URL(request.url);
+    const searchParams = request.nextUrl.searchParams;
     const status = searchParams.get('status');
     const search = searchParams.get('search');
 
-    let query:QuaryType = {};
+    let query: QueryType = {};
 
     if (user.role === 'teacher') query.uploadedBy = user.id;
     if (status) query.status = status;
@@ -35,12 +38,14 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ contents });
 
   } catch (err) {
+    console.log(err);
+    
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
-const MAX_SIZE = 10 * 1024 * 1024; // 10MB
+const MAX_SIZE = 10 * 1024 * 1024; 
 
 export async function POST(request: NextRequest) {
   try {
@@ -59,7 +64,10 @@ export async function POST(request: NextRequest) {
     const description = formData.get('description');
     const startTime: string = formData.get('startTime')?.toString() || '';
     const endTime: string = formData.get('endTime')?.toString() || '';
-    const rotationDuration = formData.get('rotationDuration');
+    const rotationDuration: string = formData.get('rotationDuration')?.toString() || '12';
+
+
+
 
     if (!file) return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     if (!ALLOWED_TYPES.includes(file.type)) {
@@ -90,9 +98,19 @@ export async function POST(request: NextRequest) {
       uploadedBy: user.id,
     });
 
-    return NextResponse.json({ content }, { status: 201 });
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Content uploaded successfully",
+        data: {
+          content
+        }
+      },
+      { status: 201 });
 
   } catch (err) {
+    console.log(err);
+    
     return NextResponse.json({ error: err }, { status: 500 });
   }
 }

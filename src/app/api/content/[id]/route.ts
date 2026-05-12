@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import Content from '@/models/Content';
 import { getUserFromRequest } from '@/lib/auth';
 import { dbConnect } from '@/lib/db';
+import '@/models/User';
 
 export async function GET(request:NextRequest, { params }:any) {
   try {
