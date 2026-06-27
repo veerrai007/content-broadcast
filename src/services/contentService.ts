@@ -27,7 +27,7 @@ const contentService = {
   },
 
   async delete(id: string): Promise<{ message: string }> {
-    const response = await api.delete<{ message: string }>(`/content/${id}`);
+    const response = await api.delete<{ message: string }>(`/content/delete?id=${id}`);
     return response.data;
   },
 

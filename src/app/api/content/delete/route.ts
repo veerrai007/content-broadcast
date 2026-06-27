@@ -20,13 +20,16 @@ export async function GET(request:NextRequest, { params }:any) {
   }
 }
 
-export async function DELETE(request:NextRequest, { params }:any) {
+export async function DELETE(request:NextRequest) {
   try {
     const user:any = getUserFromRequest(request);
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
+    const param = request.nextUrl.searchParams.get('id');
+    if (!param) return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+    
     await dbConnect();
-    const content = await Content.findById(params.id);
+    const content = await Content.findById(param);
     if (!content) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
     if (content.uploadedBy.toString() !== user.id ) {

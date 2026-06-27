@@ -25,6 +25,17 @@ export function proxy(request: NextRequest) {
         }
         return NextResponse.next();
     }
+    if (pathname === '/') {
+        if (decoded) {
+            if (decoded.role === 'teacher') {
+                return NextResponse.redirect(new URL('/teacher/dashboard', request.url));
+            }
+            if (decoded.role === 'principal') {
+                return NextResponse.redirect(new URL('/principal/dashboard', request.url));
+            }
+        }
+        return NextResponse.next();
+    }
 
     const isProtected =
         TEACHER_ROUTES.some((r) => pathname.startsWith(r)) ||

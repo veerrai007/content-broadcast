@@ -15,7 +15,7 @@ const statusTabs: { label: string; value: ContentStatus | 'all' }[] = [
 
 export default function MyContentPage() {
   const [activeTab, setActiveTab] = useState<ContentStatus | 'all'>('all');
-  const { contents, isLoading, error } = useContent({
+  const { contents, isLoading, error, refetch } = useContent({
     status: activeTab === 'all' ? undefined : activeTab,
   });
 
@@ -55,7 +55,7 @@ export default function MyContentPage() {
       </div>
 
       {/* Table */}
-      <ContentTable contents={contents} isLoading={isLoading} />
+      <ContentTable onDeleted={refetch} contents={contents} isLoading={isLoading} />
     </div>
   );
 }

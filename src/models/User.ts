@@ -1,4 +1,3 @@
-// models/User.js
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt'
 
@@ -7,7 +6,7 @@ export const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      trim: true,
+      trim: true,   
     },
     email: {
       type: String,

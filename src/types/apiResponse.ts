@@ -1,10 +1,10 @@
-import { ContentType } from "@/models/Content";
+import { Content } from ".";
 
 export interface ApiResponse {
     success: boolean;
     message: string;
     data: {
-        content?: ContentType
+        content?: Content
     };
 }
 

@@ -5,9 +5,10 @@ import StatsCard from '@/components/teacher/StatsCard';
 import ContentTable from '@/components/teacher/ContentTable';
 import { LayoutDashboard, FileStack, Clock, CheckCircle, XCircle } from 'lucide-react';
 import Link from 'next/link';
+import LiveLinkCard from '@/components/teacher/LiveLinkCard';
 
 export default function TeacherDashboard() {
-  const { contents, stats, isLoading, error } = useContent();
+  const { contents, stats, isLoading, error , refetch } = useContent();
 
   return (
     <div className="space-y-8">
@@ -43,6 +44,8 @@ export default function TeacherDashboard() {
         <StatsCard label="Rejected"        value={stats.rejected} icon={XCircle}      color="red"    />
       </div>
 
+      <LiveLinkCard />
+
       {/* Recent Content */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
@@ -51,7 +54,7 @@ export default function TeacherDashboard() {
             View all →
           </Link>
         </div>
-        <ContentTable contents={contents.slice(0, 5)} isLoading={isLoading} />
+        <ContentTable onDeleted={refetch} contents={contents.slice(0, 5)} isLoading={isLoading} />
       </div>
     </div>
   );

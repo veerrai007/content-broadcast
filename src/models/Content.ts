@@ -1,22 +1,6 @@
 import mongoose from 'mongoose';
 
-export type ContentType = {
-  _id?: string;
-  title: string;
-  description: string;
-  subject: string;
-  fileUrl: string;
-  uploadedBy: mongoose.Schema.Types.ObjectId;
-  status: string;
-  rejectionReason?: string;
-  startTime: Date;
-  endTime: Date;
-  rotationDuration: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
-
-const contentSchema: mongoose.Schema<ContentType> = new mongoose.Schema(
+const contentSchema = new mongoose.Schema(
   {
     title: {
       type: String,

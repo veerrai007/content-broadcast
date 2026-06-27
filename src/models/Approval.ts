@@ -1,4 +1,3 @@
-// models/Approval.js
 import mongoose from 'mongoose';
 
 const approvalSchema = new mongoose.Schema(
@@ -20,7 +19,7 @@ const approvalSchema = new mongoose.Schema(
     },
     reason: {
       type: String,
-      default: null, // mandatory if action === 'rejected'
+      default: null, 
     },
   },
   { timestamps: true }
