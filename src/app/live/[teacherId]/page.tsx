@@ -59,7 +59,7 @@ export default function LivePage() {
           <span className="text-sm font-semibold text-gray-900 tracking-tight">
             EduBroadcast
           </span>
-          <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">
+          <span className="text-xs text-red-600 bg-red-100 px-2 py-0.5 rounded-full">
             Live
           </span>
         </div>
@@ -67,14 +67,14 @@ export default function LivePage() {
         {/* Last updated + manual refresh */}
         <div className="flex items-center gap-3">
           {lastUpdated && (
-            <span className="text-xs text-gray-400 hidden sm:block">
+            <span className="text-xs text-gray-800 hidden sm:block">
               Updated {lastUpdated.toLocaleTimeString()}
             </span>
           )}
           <button
             onClick={fetchContent}
             disabled={isLoading}
-            className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700 transition-colors disabled:opacity-50"
+            className="flex items-center gap-1.5 text-xs text-black hover:text-gray-700 transition-colors disabled:opacity-50"
           >
             <RefreshCw size={13} className={isLoading ? 'animate-spin' : ''} />
             Refresh

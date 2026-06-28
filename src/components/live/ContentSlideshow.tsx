@@ -25,22 +25,23 @@ export default function ContentSlideshow({ contents }: ContentSlideshowProps) {
     setProgress(0);
   };
 
-  // Auto advance timer
+  // Auto advance progress bar
   useEffect(() => {
     if (contents.length <= 1) return;
 
     const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          goNext();
-          return 0;
-        }
-        return prev + (100 / (duration / 100));
-      });
+      setProgress((prev) => prev + (100 / (duration / 100)));
     }, 100);
 
     return () => clearInterval(interval);
-  }, [currentIndex, duration, goNext, contents.length]);
+  }, [currentIndex, duration, contents.length]);
+
+  // Handle slide transition when progress reaches/exceeds 100%
+  useEffect(() => {
+    if (progress >= 100) {
+      goNext();
+    }
+  }, [progress, goNext]);
 
   if (!current) return null;
 
